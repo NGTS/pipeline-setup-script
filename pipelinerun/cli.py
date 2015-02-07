@@ -24,7 +24,7 @@ def create_run_script(args):
     args.output.write(text + '\n')
 
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--date', required=True)
     parser.add_argument('-b', '--bias', nargs='+', required=True, type=int)
@@ -36,7 +36,11 @@ def main():
     parser.add_argument('-c', '--camera_id', required=True, type=int)
     parser.add_argument('-o', '--output', type=argparse.FileType('w'),
                         nargs='?', default=sys.stdout)
-    create_run_script(parser.parse_args())
+    return parser
+
+
+def main():
+    create_run_script(create_parser().parse_args())
 
 if __name__ == '__main__':
     main()
