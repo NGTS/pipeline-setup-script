@@ -1,8 +1,21 @@
+from unittest import mock
+import pytest
+
 from pipelinerun.cli import create_run_script
 
 
 class Arguments(object):
     pass
+
+
+@mock.patch('pipelinerun.cli.fetch_pipeline_sha', return_value=None)
+def test_bad_sha_passed(pipeline_sha):
+    args = Arguments()
+    args.sha = None
+    with pytest.raises(RuntimeError) as err:
+        create_run_script(args)
+
+    assert 'Cannot determine pipeline sha' in str(err)
 
 
 def test_final_product(tmpdir):
