@@ -4,10 +4,10 @@ set -e
 
 # DATE: {{ date }}
 
-BIAS_ACTIONS=({{ bias }})
-DARK_ACTIONS=({{ dark }})
-FLAT_ACTIONS=({{ flat }})
-SCIENCE_ACTIONS=({{ science }})
+BIAS_ACTIONS=({{ bias|add_spacings }})
+DARK_ACTIONS=({{ dark|add_spacings }})
+FLAT_ACTIONS=({{ flat|add_spacings }})
+SCIENCE_ACTIONS=({{ science|add_spacings }})
 PIPELINE_SHA="{{ pipeline_sha }}"
 
 main() {
