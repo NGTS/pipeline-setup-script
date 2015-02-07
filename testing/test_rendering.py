@@ -5,3 +5,8 @@ from pipelinerun import render
 def test_environment_loading(create_env):
     r = render.RendersTemplate()
     assert r.env == create_env.return_value
+
+
+def test_render_contents():
+    r = render.RendersTemplate()
+    assert r.render(date='2015/01/01')
