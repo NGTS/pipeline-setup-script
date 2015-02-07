@@ -3,3 +3,5 @@ venv
 testing/__pycache__
 *.egg-info
 *.swp
+.coverage
+htmlcov
