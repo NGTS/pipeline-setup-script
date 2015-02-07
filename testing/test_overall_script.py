@@ -1,7 +1,7 @@
 from unittest import mock
 import pytest
 
-from pipelinerun.cli import create_run_script
+from pipelinerun.cli import create_run_script, create_parser
 
 
 class Arguments(object):
@@ -39,3 +39,9 @@ def test_final_product(tmpdir):
 
     with open(output_filename) as infile:
         assert infile.read() == expected_contents
+
+
+@mock.patch('pipelinerun.cli.argparse.ArgumentParser', autospec=True)
+def test_create_parser(ArgumentParser):
+    parser = create_parser()
+    ArgumentParser.return_value.add_argument.assert_any_call('--date', required=True)
