@@ -1,8 +1,9 @@
 import pytest
 import os
 import subprocess as sp
+from contextlib import contextmanager
 
-from pipelinerun.git import get_git_sha, chdir
+from pipelinerun.git import get_git_sha, chdir, fetch_pipeline_sha
 
 
 @pytest.fixture
@@ -17,6 +18,16 @@ def setup_sha(tmpdir):
             return str(tmpdir), infile.read().strip()
 
 
+@contextmanager
+def change_ngts_envar(value):
+    _environ = dict(os.environ)
+    try:
+        os.environ['NGTS'] = value
+        yield
+    finally:
+        os.environ.clear()
+        os.environ.update(_environ)
+
 def test_chdir(tmpdir):
     initial_dir = os.getcwd()
     with chdir(str(tmpdir)):
@@ -27,3 +38,15 @@ def test_chdir(tmpdir):
 def test_check_git_sha(setup_sha):
     path, expected_sha = setup_sha
     assert get_git_sha(path) == expected_sha
+
+
+def test_fetch_pipeline_sha(tmpdir):
+    containing_dir = os.path.join(str(tmpdir), 'pipeline', 'ZLP', 'zlp-script',
+                                  '.git', 'refs', 'heads')
+    with change_ngts_envar(str(tmpdir)):
+        os.makedirs(containing_dir)
+        with open(os.path.join(containing_dir, 'master'), 'w') as outfile:
+            outfile.write('hello-world')
+
+        sha = fetch_pipeline_sha()
+        assert sha == 'hello-world'
