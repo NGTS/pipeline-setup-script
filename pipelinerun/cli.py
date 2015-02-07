@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from .render import RendersTemplate
 
@@ -11,12 +12,11 @@ def create_run_script(args):
         dark=args.dark,
         flat=args.flat,
         science=args.science,
-        pipeline_sha=args.pipeline_sha,
-        planetname=args.planetname,
+        pipeline_sha=args.sha,
+        planetname=args.planet,
         camera_id=args.camera_id)
 
-    with open(args.output, 'w') as outfile:
-        outfile.write(text + '\n')
+    args.output.write(text + '\n')
 
 
 def main():
@@ -29,6 +29,8 @@ def main():
     parser.add_argument('--sha', required=True)
     parser.add_argument('--planet', required=True)
     parser.add_argument('-c', '--camera_id', required=True, type=int)
+    parser.add_argument('-o', '--output', type=argparse.FileType('w'),
+                        nargs='?', default=sys.stdout)
     create_run_script(parser.parse_args())
 
 if __name__ == '__main__':
