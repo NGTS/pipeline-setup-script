@@ -1,3 +1,5 @@
+## Required inputs
+
 * date
 * actions to analyse
 * pipeline sha
