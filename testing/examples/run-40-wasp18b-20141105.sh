@@ -14,7 +14,7 @@ main() {
     source /ngts/pipedev/ParanalOutput/running-the-pipeline/init.sh
     setup_wasp18b
 
-    RUN_NAME=40-wasp18b-20141105
+    RUN_NAME=20141105-wasp18b
     ROOT_DIRECTORY=${BASEDIR}/${RUN_NAME}
     INITIAL_WCS_SOLUTION=$(python ./solution_mapping/query_for_solution.py --mysql --camera-id 804 --action ${SCIENCE_ACTIONS[0]})
 
