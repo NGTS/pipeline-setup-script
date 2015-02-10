@@ -6,7 +6,7 @@ This script reads in a jinja2 template, and given a set of command line argument
 
 The main executable is `render-pipelinescript.py`
 
-## <a name="installation"></a>Installation
+## Installation
 
 * Clone the directory `git clone https://github.com/NGTS/pipeline-setup-script`
 * Install the python requirements `pip install -r requirements.txt`
