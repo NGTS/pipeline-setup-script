@@ -31,7 +31,7 @@ def test_final_product(tmpdir):
     args.flat = [101126, ]
     args.science = [101140, ]
     args.sha = '59aa1ec756657430048c45beea8093ed724f5ea2'
-    args.planet = 'wasp18b'
+    args.planet = 'WASP-18 b'
     args.camera_id = 804
     with open(output_filename, 'w') as outfile:
         args.output = outfile

@@ -5,6 +5,10 @@ from .render import RendersTemplate
 from .git import fetch_pipeline_sha
 
 
+def sanitise_planet_name(name):
+    return name.lower().replace('b', '').replace('-', '').strip() + 'b'
+
+
 def create_run_script(args):
     r = RendersTemplate()
     pipeline_sha = args.sha if args.sha is not None else fetch_pipeline_sha()
@@ -18,7 +22,7 @@ def create_run_script(args):
         flat=args.flat,
         science=args.science,
         pipeline_sha=pipeline_sha,
-        planetname=args.planet,
+        planetname=sanitise_planet_name(args.planet),
         camera_id=args.camera_id)
 
     args.output.write(text + '\n')

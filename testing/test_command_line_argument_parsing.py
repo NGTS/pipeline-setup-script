@@ -11,7 +11,7 @@ from pipelinerun import cli
 def valid_args():
     return ['--date', '2015/01/26', '-b', '101266',
             '-d', '101255', '-f', '101219', '101223', '-s', '101221',
-            '--planet', 'wasp18', '-c', '803']
+            '--planet', 'wasp-18b', '-c', '803']
 
 
 @pytest.fixture
@@ -32,6 +32,9 @@ def test_parse_args_help(exit, parser, capsys):
     assert 'usage:' in out
 
 
-@mock.patch('pipelinerun.cli.argparse.ArgumentParser.exit')
-def test_parse_args_multiple_actions(exit, args):
+def test_parse_args_multiple_actions(args):
     assert len(args.flat) == 2
+
+
+def test_sanitise_planet_name():
+    assert cli.sanitise_planet_name('WASP-18 b') == 'wasp18b'
