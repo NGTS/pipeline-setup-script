@@ -14,7 +14,7 @@ main() {
     source /ngts/pipedev/ParanalOutput/running-the-pipeline/init.sh
     setup_{{ planetname }}
 
-    RUN_NAME={{ date|clean_date }}-{{ planetname }}
+    RUN_NAME={{ date|clean_date }}-{{ planetname }}-{{ camera_id }}
     ROOT_DIRECTORY=${BASEDIR}/${RUN_NAME}
     INITIAL_WCS_SOLUTION=$(python ./solution_mapping/query_for_solution.py --mysql --camera-id {{ camera_id }} --action ${SCIENCE_ACTIONS[0]})
 
