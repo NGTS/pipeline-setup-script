@@ -2,3 +2,5 @@ Jinja2==2.7.3
 MarkupSafe==0.23
 py==1.4.26
 pytest==2.6.4
+autopep8==1.1
+pytest-pep8==1.0.6
