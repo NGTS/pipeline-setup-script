@@ -28,6 +28,7 @@ def change_ngts_envar(value):
         os.environ.clear()
         os.environ.update(_environ)
 
+
 def test_chdir(tmpdir):
     initial_dir = os.getcwd()
     with chdir(str(tmpdir)):

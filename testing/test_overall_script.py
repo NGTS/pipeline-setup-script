@@ -44,4 +44,5 @@ def test_final_product(tmpdir):
 @mock.patch('pipelinerun.cli.argparse.ArgumentParser', autospec=True)
 def test_create_parser(ArgumentParser):
     parser = create_parser()
-    ArgumentParser.return_value.add_argument.assert_any_call('--date', required=True)
+    ArgumentParser.return_value.add_argument.assert_any_call(
+        '--date', required=True)
