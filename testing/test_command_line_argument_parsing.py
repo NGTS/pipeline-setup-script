@@ -36,5 +36,8 @@ def test_parse_args_multiple_actions(args):
     assert len(args.flat) == 2
 
 
-def test_sanitise_planet_name():
-    assert cli.sanitise_planet_name('WASP-18 b') == 'wasp18b'
+@pytest.mark.parametrize('input',
+                         ['WASP-18 b', 'WASP-18', 'WASP18', 'wasp18',
+                          'wasp 18b'])
+def test_sanitise_planet_name(input):
+    assert cli.sanitise_planet_name(input) == 'wasp18b'

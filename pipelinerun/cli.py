@@ -6,7 +6,12 @@ from .git import fetch_pipeline_sha
 
 
 def sanitise_planet_name(name):
-    return name.lower().replace('b', '').replace('-', '').strip() + 'b'
+    return (name
+            .lower()
+            .replace(' ', '')
+            .replace('b', '')
+            .replace('-', '')
+            .strip()) + 'b'
 
 
 def create_run_script(args):
