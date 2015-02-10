@@ -6,7 +6,7 @@ This script reads in a jinja2 template, and given a set of command line argument
 
 The main executable is `render-pipelinescript.py`
 
-## Installation
+## <a name="installation"></a>Installation
 
 * Clone the directory `git clone https://github.com/NGTS/pipeline-setup-script`
 * Install the python requirements `pip install -r requirements.txt`
@@ -33,6 +33,11 @@ optional arguments:
   -c CAMERA_ID, --camera_id CAMERA_ID
   -o [OUTPUT], --output [OUTPUT]
 ```
+
+## Development
+
+* Install the package as [above](#installation), in development mode
+* run the test runner `py.test`
 
 ## Required inputs
 
