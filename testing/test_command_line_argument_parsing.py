@@ -30,3 +30,8 @@ def test_parse_args_help(exit, parser, capsys):
 
     out, err = capsys.readouterr()
     assert 'usage:' in out
+
+
+@mock.patch('pipelinerun.cli.argparse.ArgumentParser.exit')
+def test_parse_args_multiple_actions(exit, args):
+    assert len(args.flat) == 2
