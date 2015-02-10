@@ -1,6 +1,8 @@
 import argparse
 import sys
+import logging
 
+from .actioncheck import check_actions
 from .render import RendersTemplate
 from .git import fetch_pipeline_sha
 
@@ -19,6 +21,8 @@ def create_run_script(args):
     pipeline_sha = args.sha if args.sha is not None else fetch_pipeline_sha()
     if not pipeline_sha:
         raise RuntimeError("Cannot determine pipeline sha, please specify")
+
+    check_actions(args)
 
     text = r.render(
         date=args.date,
