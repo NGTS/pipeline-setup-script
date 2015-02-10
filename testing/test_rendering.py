@@ -1,4 +1,5 @@
 from unittest import mock
+
 from pipelinerun import render
 
 
@@ -10,4 +11,6 @@ def test_environment_loading(create_env):
 
 def test_render_contents():
     r = render.RendersTemplate()
-    assert r.render(date='2015/01/01')
+    assert r.render(date='2015/01/01',
+                    planetname='wasp18b',
+                    camera_id=804)
