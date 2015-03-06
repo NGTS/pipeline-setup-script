@@ -48,7 +48,7 @@ def create_parser():
     parser.add_argument('--planet', required=True)
     parser.add_argument('-c', '--camera_id', required=True, type=int)
     parser.add_argument('-o', '--output', type=argparse.FileType('w'),
-                        nargs='?', default=sys.stdout)
+                        default='-')
     return parser
 
 
