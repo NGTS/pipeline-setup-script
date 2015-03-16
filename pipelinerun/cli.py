@@ -5,6 +5,7 @@ import logging
 from .actioncheck import check_actions
 from .render import RendersTemplate
 from .git import fetch_pipeline_sha
+from .validations import ensure_all_actions_available
 
 
 def sanitise_planet_name(name):
@@ -17,6 +18,7 @@ def sanitise_planet_name(name):
 
 
 def create_run_script(args):
+    ensure_all_actions_available(args.bias, args.dark, args.flat, args.science)
     r = RendersTemplate()
     pipeline_sha = args.sha if args.sha is not None else fetch_pipeline_sha()
     if not pipeline_sha:
