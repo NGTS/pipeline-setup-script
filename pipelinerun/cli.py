@@ -6,15 +6,20 @@ from .actioncheck import check_actions
 from .render import RendersTemplate
 from .git import fetch_pipeline_sha
 from .validations import ensure_all_actions_available
+from .filepaths import default_filename
 
 
 def sanitise_planet_name(name):
-    return (name
-            .lower()
-            .replace(' ', '')
-            .replace('b', '')
-            .replace('-', '')
+    return (name.lower().replace(' ', '').replace('b', '').replace('-', '')
             .strip()) + 'b'
+
+
+def render_default_file(date, planet_name, camera_id, text):
+    default_script_location = default_filename(date=date,
+                                               planet_name=planet_name,
+                                               camera_id=camera_id)
+    with open(default_script_location, 'w') as outfile:
+        outfile.write(text + '\n')
 
 
 def create_run_script(args):
@@ -26,17 +31,22 @@ def create_run_script(args):
 
     check_actions(args)
 
-    text = r.render(
-        date=args.date,
-        bias=args.bias,
-        dark=args.dark,
-        flat=args.flat,
-        science=args.science,
-        pipeline_sha=pipeline_sha,
-        planetname=sanitise_planet_name(args.planet),
-        camera_id=args.camera_id)
+    text = r.render(date=args.date,
+                    bias=args.bias,
+                    dark=args.dark,
+                    flat=args.flat,
+                    science=args.science,
+                    pipeline_sha=pipeline_sha,
+                    planetname=sanitise_planet_name(args.planet),
+                    camera_id=args.camera_id)
 
-    args.output.write(text + '\n')
+    if args.output is None:
+        render_default_file(date=args.date,
+                            planet_name=sanitise_planet_name(args.planet),
+                            camera_id=args.camera_id,
+                            text=text)
+    else:
+        args.output.write(text + '\n')
 
 
 def create_parser():
@@ -49,13 +59,15 @@ def create_parser():
     parser.add_argument('--sha', required=False)
     parser.add_argument('--planet', required=True)
     parser.add_argument('-c', '--camera_id', required=True, type=int)
-    parser.add_argument('-o', '--output', type=argparse.FileType('w'),
-                        default='-')
+    parser.add_argument('-o', '--output',
+                        type=argparse.FileType('w'),
+                        required=False)
     return parser
 
 
 def main():
     create_run_script(create_parser().parse_args())
+
 
 if __name__ == '__main__':
     main()
