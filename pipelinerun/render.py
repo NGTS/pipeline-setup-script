@@ -13,6 +13,6 @@ class RendersTemplate(object):
 
     def run_name(self, kwargs):
         return '-'.join(map(str, [
-            clean_date(kwargs['date']),
+            clean_date(kwargs['night']),
             kwargs['planetname'],
             kwargs['camera_id']]))
