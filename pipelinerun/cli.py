@@ -1,7 +1,7 @@
 import argparse
 import sys
 import logging
-from fetchactions.cli import NoResults, fetch_night_info
+import fetchactions.cli as fetchactions
 
 from .actioncheck import check_actions
 from .render import RendersTemplate
@@ -71,7 +71,12 @@ def commandline_args(parser):
 
 
 def main():
-    create_run_script(commandline_args(create_parser()))
+    parser = create_parser()
+    try:
+        create_run_script(parser.parse_args())
+    except fetchactions.NoResults as err:
+        raise RuntimeError('Could not find actions in the database '
+                'for the night specified. Please specify actions manually')
 
 
 if __name__ == '__main__':
