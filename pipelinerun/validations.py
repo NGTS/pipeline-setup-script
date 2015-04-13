@@ -26,13 +26,14 @@ class NoFiles(RuntimeError):
         super(NoFiles, self).__init__(msg)
 
 
-def ensure_all_actions_available(bias, dark, flat, science):
+def ensure_all_actions_available(action_list):
     '''
     Given lists of actions, ensure the directories are all available on disk
     under /ngts/testdata/paranal
     '''
     keys = ['bias', 'dark', 'flat', 'science']
-    for (key, values) in zip(keys, [bias, dark, flat, science]):
+    for key in keys:
+        values = getattr(action_list, key)
         for action_id in values:
             found, action_path = False, None
             dirname_options = [os.path.join(data_root,
