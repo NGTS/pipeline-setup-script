@@ -65,9 +65,13 @@ def create_parser():
                         required=False)
     return parser
 
+def commandline_args(parser):
+    args = parser.parse_args()
+    return args
+
 
 def main():
-    create_run_script(create_parser().parse_args())
+    create_run_script(commandline_args(create_parser()))
 
 
 if __name__ == '__main__':
