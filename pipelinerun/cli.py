@@ -1,6 +1,7 @@
 import argparse
 import sys
 import logging
+from fetchactions.cli import NoResults, fetch_night_info
 
 from .actioncheck import check_actions
 from .render import RendersTemplate
