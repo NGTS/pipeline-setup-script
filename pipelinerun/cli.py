@@ -14,8 +14,8 @@ def sanitise_planet_name(name):
             .strip()) + 'b'
 
 
-def render_default_file(date, planet_name, camera_id, text):
-    default_script_location = default_filename(date=date,
+def render_default_file(night, planet_name, camera_id, text):
+    default_script_location = default_filename(night=night,
                                                planet_name=planet_name,
                                                camera_id=camera_id)
     with open(default_script_location, 'w') as outfile:
@@ -31,7 +31,7 @@ def create_run_script(args):
 
     check_actions(args)
 
-    text = r.render(date=args.date,
+    text = r.render(night=args.night,
                     bias=args.bias,
                     dark=args.dark,
                     flat=args.flat,
@@ -41,7 +41,7 @@ def create_run_script(args):
                     camera_id=args.camera_id)
 
     if args.output is None:
-        render_default_file(date=args.date,
+        render_default_file(night=args.night,
                             planet_name=sanitise_planet_name(args.planet),
                             camera_id=args.camera_id,
                             text=text)
@@ -51,11 +51,11 @@ def create_run_script(args):
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--date', required=True)
-    parser.add_argument('-b', '--bias', nargs='+', required=True, type=int)
-    parser.add_argument('-d', '--dark', nargs='+', required=True, type=int)
-    parser.add_argument('-f', '--flat', nargs='+', required=True, type=int)
-    parser.add_argument('-s', '--science', nargs='+', required=True, type=int)
+    parser.add_argument('--night', required=True, help='Must match wiki night')
+    parser.add_argument('-b', '--bias', nargs='+', required=False, type=int)
+    parser.add_argument('-d', '--dark', nargs='+', required=False, type=int)
+    parser.add_argument('-f', '--flat', nargs='+', required=False, type=int)
+    parser.add_argument('-s', '--science', nargs='+', required=False, type=int)
     parser.add_argument('--sha', required=False)
     parser.add_argument('--planet', required=True)
     parser.add_argument('-c', '--camera_id', required=True, type=int)
